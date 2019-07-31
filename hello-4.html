@@ -1,0 +1,51 @@
+<meta charset="utf-8">
+<script>
+// Ищем максимальную последовательность выпадения красных в рулетке
+
+var RED = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+var BLACK = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
+var arr = []; // массив случайно выпавших чисел
+var new_arr = []; // 0 - зеро, 1 - красное, -1 - чёрное
+var red; // Найдено ли красное при переборе массива RED
+var maxRed = 0; // Максимальное кол-во красных подряд
+var rounds = parseInt(prompt('Введите число раундов'));
+var lengthRed;
+var colRed=0; //Всего выпавших красных
+var length = arr.length; //длина массива
+
+for(var i=0; i<rounds; i++) {
+    arr.push(Math.round(Math.random()*36));
+    if (arr[i] == 0) {
+        new_arr.push(0); // Это зеро
+        } else {
+            red = false;
+            for (j=0; j<18; j++) { // Перебираем массив RED, ищем совпадение с красным
+                if (arr[i] == RED[j]) {
+                    new_arr.push(1); // Ура, это красное!
+                    red = true;
+                    break;
+                }
+            }
+                if(!red) { // Массив RED перебран, красное не найдено
+                    new_arr.push(-1); // Значит это чёрное
+                }
+        }
+}
+alert('arr=' + arr+ '\n new_arr=' + new_arr);
+
+// Ищем максимально длинную красную последовательность
+for(i=0; i<rounds; i++){
+    if (new_arr[i] == 1) {
+        lengthRed = 0;
+        while (i<rounds && new_arr[i] == 1){
+            colRed++;
+            lengthRed++;
+            i++;
+        }
+        if (lengthRed > maxRed) {
+            maxRed = lengthRed;
+        }
+    }
+}
+alert('Количество красных = ' + colRed + '\nМаксимально длинная красная последовательность: ' + maxRed);
+</script>
